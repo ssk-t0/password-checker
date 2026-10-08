@@ -1,0 +1,127 @@
+/* 画面全体 */
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1e293b;
+  background: #f1f5fb;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* メインカード */
+.checker {
+  width: 100%;
+  max-width: 480px;
+  margin: 0;
+  padding: 40px;
+  background: #ffffff;
+  border: 1px solid #e7edf5;
+  border-radius: 24px;
+  box-shadow: 0 18px 55px rgba(30, 50, 90, 0.09);
+}
+
+/* タイトル */
+.checker h1 {
+  margin: 0 0 28px;
+  font-size: 25px;
+  font-weight: 750;
+  letter-spacing: -0.7px;
+  color: #172b4d;
+  line-height: 1.4;
+}
+
+/* 入力欄 */
+.checker input {
+  display: block;
+  width: 100%;
+  height: 54px;
+  padding: 0 16px;
+  border: 1.5px solid #dce5f0;
+  border-radius: 12px;
+  background: #f8faff;
+  color: #1e293b;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.checker input:focus {
+  border-color: #5387e8;
+  box-shadow: 0 0 0 4px rgba(83, 135, 232, 0.12);
+}
+
+.checker input::placeholder {
+  color: #9aa9bc;
+}
+
+/* 強度ゲージ */
+.strength-bar {
+  display: flex;
+  gap: 7px;
+  margin: 22px 0 20px;
+}
+
+.segment {
+  flex: 1;
+  height: 9px;
+  border-radius: 20px;
+  transition: background-color 0.25s ease;
+}
+
+/* 通常テキスト */
+.checker p {
+  margin: 12px 0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #52637b;
+}
+
+/* セクション見出し */
+.checker h3 {
+  margin: 28px 0 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #213858;
+}
+
+/* 改善アドバイス */
+.checker h3 + p {
+  background: #f2f6fc;
+  padding: 16px;
+  border-radius: 12px;
+  border-left: 3px solid #5685df;
+  line-height: 1.9;
+}
+
+/* スマホ対応 */
+@media (max-width: 520px) {
+  #root {
+    padding: 16px;
+  }
+
+  .checker {
+    padding: 26px 22px;
+    border-radius: 18px;
+  }
+
+  .checker h1 {
+    font-size: 21px;
+  }
+}
