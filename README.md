@@ -1,54 +1,175 @@
-# React + TypeScript + Vite
+# Password Checker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**パスワードの安全性を、攻撃者の視点から学ぶWebアプリケーション🔑**
 
-Currently, two official plugins are available:
+React・TypeScriptを使用して制作した、パスワード強度チェッカーです。パスワードの強さを判定するだけでなく、攻撃方法や環境によって、どの程度の時間で推測される可能性があるのかを可視化しています👁️✨
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+セキュリティの仕組みを、実際に操作しながら直感的に理解できることを目指しました☝️
 
-## Expanding the ESLint configuration
+## 主な機能
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **パスワード強度判定**：zxcvbn-tsを利用し、辞書単語や繰り返し、連続した文字列などを考慮して評価
+- **推定突破時間の表示**：オンライン攻撃・オフライン攻撃など、4種類の条件で推定時間を比較
+- **攻撃シミュレーター**：パスワードを設定すると、ターミナル風のアニメーションで解析過程を演出
+- **セキュリティアドバイス**：判定結果に応じて改善方法を表示
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 使用技術
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+| 技術用途         |                |
+| ------------ | -------------- |
+| React        | UI構築・状態管理      |
+| TypeScript   | アプリケーションのロジック  |
+| Vite         | 開発環境・ビルド       |
+| CSS          | デザイン・アニメーション   |
+| zxcvbn-ts    | パスワード強度分析      |
+| Git / GitHub | ソースコード・変更履歴の管理 |
+
+## 開発のきっかけ
+
+以前から気になっていたReact...
+
+TypeScriptも気にはなっていたものの、学習コストを考えるとなかなか手を出せずにいました。
+
+実際に触ってみると、JavaScriptをベースにした言語なので、これまでの知識を活かしながら比較的スムーズに理解できました。
+
+特にありがたいと感じたのが、**型の不一致などを開発中にエラーとして教えてくれること**です!!
+
+もちろん、すべてのエラーを防げるわけではありませんが、コードを書いている段階で間違いに気づけるのは便利ですね🫶
+
+
+
+基本的には自分でコードを書いて試行錯誤し、分からないところはチャッピーに相談する、という流れで進めました。
+
+GitHubには残っていませんが、開発中はそれなりにエラーも出ました。特にライブラリのバージョンによる仕様の違いや、CSSのレイアウト調整などは、実際に手を動かしてみないと分からない部分が多いですね。
+
+今回はパスワードチェッカーという比較的小さなアプリですが、せっかくなのでハッカーが操作しているようなターミナル演出も取り入れてみました。
+
+## 今回学んだこと
+
+- ReactのコンポーネントとuseStateによる状態管理
+- TypeScriptとJavaScriptの違い
+- Node.js・npm・Viteの役割
+- 外部ライブラリのインストールと利用
+- パスワード強度推定の基本的な仕組み
+- CSSによるUIデザインとアニメーション
+
+## パスワード攻撃について
+
+今回の開発を通して、パスワードを狙う攻撃が私が知るよりもさまざまな種類があることを知りました。
+
+そもそも、攻撃手法の名前って何だかゲームの必殺技みたいで面白いですよね。
+
+「ブルートフォース攻撃」「リバースブルートフォース攻撃」「レインボーテーブル攻撃」とか（笑）。
+
+### 今回のアプリで扱った攻撃の考え方
+
+**辞書攻撃（Dictionary Attack）**
+
+よく使われる単語やパスワードの候補を辞書のようにまとめ、優先的に試していく攻撃です。
+
+例えば「password」「admin」「123456」といった定番の文字列は、ランダムな文字列よりも推測されやすくなります。
+
+今回のアプリでは、zxcvbn-tsの辞書データを利用して、こうしたパターンを分析しています。
+
+**ブルートフォース攻撃（Brute Force Attack）**
+
+考えられる文字の組み合わせを次々に試す、いわゆる総当たり攻撃です。
+
+Brute Forceは「力ずく」という意味で、名前の通りの攻撃方法ですね。
+
+今回のアプリでは、推定試行回数と攻撃速度の想定条件をもとに、パスワードが推測されるまでの時間を表示しています。
+
+ただし、実際にすべての組み合わせを試しているわけではありません。
+
+**パターン推測**
+
+「123456」「abcdef」「aaaaaa」など、規則的な文字列や繰り返しを利用してパスワードを推測する考え方です。
+
+今回のアプリでは、連番や繰り返しなどのパターンを検出し、パスワードの強度評価に反映しています。
+
+※ここでいうパターン推測は、独立した攻撃プログラムではなく、辞書攻撃などでも利用される推測の考え方です。
+
+### 今回は実装していない攻撃手法
+
+| 攻撃手法概要           |                                |
+| ---------------- | ------------------------------ |
+| リバースブルートフォース攻撃   | 1つのよくあるパスワードを多数のアカウントに試す       |
+| クレデンシャルスタッフィング攻撃 | 流出したIDとパスワードの組を別サービスで試す        |
+| フィッシング攻撃         | 偽サイトや偽メッセージなどを使って認証情報を盗み取る     |
+| レインボーテーブル攻撃      | 事前計算されたハッシュ値の対応表を使ってパスワードを解析する |
+| パスワードスプレー攻撃      | 少数のよくあるパスワードを、多数のアカウントに試す      |
+
+リバースブルートフォース攻撃とパスワードスプレー攻撃は考え方が近く、用語が重なる場合もあるようです。
+
+また、フィッシング攻撃のように、そもそもパスワードを推測する必要がない攻撃もあります。
+
+今回のアプリは、あくまでパスワードの「推測されやすさ」を中心に扱っています。
+
+そのため、こうした攻撃への耐性まで診断できるわけではありません。
+
+## 攻撃シナリオ別の推定突破時間
+
+今回使用したzxcvbn-tsでは、攻撃環境を想定した4種類の推定時間を取得できます。
+
+| 攻撃シナリオ概要        |                       |
+| --------------- | --------------------- |
+| オンライン攻撃（制限あり）   | ログイン試行回数に制限がある場合      |
+| オンライン攻撃（制限なし）   | ログイン試行回数に制限がない場合      |
+| オフライン攻撃（低速ハッシュ） | 流出したハッシュを比較的低速に照合する場合 |
+| オフライン攻撃（高速ハッシュ） | 流出したハッシュを高速に照合できる場合   |
+
+同じパスワードでも、攻撃者が利用できる環境によって推定突破時間が大きく変わる点が興味深かったです。
+
+特にオンライン攻撃とオフライン攻撃の違いは、今回初めて意識した部分でした。
+
+ただし、これらは独立した4種類の攻撃プログラムではなく、攻撃速度や環境の違いを比較したものです。
+
+表示する時間も一定の仮定に基づく推定値であり、実際の突破時間を保証するものではありません。
+
+## ローカルでの実行方法
+
+Node.jsとnpmがインストールされた環境で、以下のコマンドを実行します。
+
+**リポジトリを取得**
+
+`git clone https://github.com/ssk-t0/password-checker.git`
+
+**プロジェクトへ移動**
+
+`cd password-checker`
+
+**依存パッケージをインストール**
+
+`npm install`
+
+**開発サーバーを起動**
+
+`npm run dev`
+
+ターミナルに表示されたローカルURLからアプリを確認できます。
+
+## 今回の振り返り
+
+今回の目的は、以前から気になっていたReactとTypeScriptに実際に触れてみることでした。
+
+パスワードチェッカーを作りながら、JavaScriptとの違いやライブラリの利用方法、Reactの状態管理などを一通り体験できたと思います。
+
+また、セキュリティについては、パスワードの文字数や複雑さだけでなく、推測されやすいパターンや攻撃環境も重要だということを学びました。
+
+今回の開発で特に印象に残ったのは、**攻撃する側の仕組みを知ることで、守る側の考え方も理解しやすくなる**ということです。
+
+例えば、総当たり攻撃について知ると、なぜログイン試行回数の制限が必要なのかが分かります。
+
+流出したパスワードを使う攻撃について知ると、なぜパスワードの使い回しが危険なのかも理解できます。
+
+単純なパスワードチェッカーを作るつもりでしたが、調べていくと、思っていた以上にセキュリティの世界は奥が深そうです。
+
+### 最後に
+
+今回はReactとTypeScriptの学習が一番の目的だったので、パスワードチェッカーの開発はいったんここで一区切りにしようと思います。
+
+まだ理解が浅い部分もありますが、実際にアプリを作ることで、それぞれの技術がどのような役割を持ち、どう組み合わさって動いているのかを少し理解できました。
+
+セキュリティについても、最初は「パスワードの強さを調べる」という単純な興味から始まりましたが、攻撃手法や防御技術など、気になることが増えました。
