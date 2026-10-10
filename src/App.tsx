@@ -196,9 +196,9 @@ function App() {
       {/* 上側：パスワード設定 */}
       <section className="checker-card">
         <div className="section-heading">
-          <span className="eyebrow">PASSWORD SECURITY LAB</span>
+          <span className="eyebrow">パスワード強度チェック</span>
 
-          <h1>パスワードセキュリティチェッカー</h1>
+          <h1>password-checker</h1>
 
           <p className="subtitle">
             パスワードを設定すると、攻撃者視点の
@@ -503,7 +503,7 @@ function App() {
 
       <div className="takeover-content">
         <div className="takeover-top">
-          <span>SECURITY LAB / SIMULATION</span>
+          <span>password-checker / SIMULATION</span>
           <button
             type="button"
             className="takeover-close"
