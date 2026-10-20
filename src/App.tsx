@@ -3,16 +3,22 @@ import { useEffect, useMemo, useState } from "react";
 import { ZxcvbnFactory } from "@zxcvbn-ts/core";
 import * as common from "@zxcvbn-ts/language-common";
 import * as english from "@zxcvbn-ts/language-en";
+import * as japanese from "@zxcvbn-ts/language-ja";
+import PatternBreakdown from "./PatternBreakdown";
+import BreachCheck from "./BreachCheck";
+import PasswordGenerator from "./PasswordGenerator";
+import HashLab from "./HashLab";
 import "./App.css";
 
-// パスワード解析エンジン
+// パスワード解析エンジン（日本語の人名・単語辞書も使う）
 const zxcvbn = new ZxcvbnFactory({
   dictionary: {
     ...common.dictionary,
     ...english.dictionary,
+    ...japanese.dictionary,
   },
   graphs: common.adjacencyGraphs,
-  translations: english.translations,
+  translations: japanese.translations,
 });
 
 // 秒数を日本語に変換
@@ -232,6 +238,8 @@ function App() {
           </button>
         </div>
 
+        <PasswordGenerator onUse={handlePasswordChange} />
+
         <button
           type="button"
           className="start-button"
@@ -314,7 +322,38 @@ function App() {
                 ? "一定の強度がありますが、改善できます。長く予測しにくいパスフレーズを検討しましょう。"
                 : "比較的推測されにくいパスワードです。使い回しを避け、多要素認証も利用しましょう。"}
             </p>
+
+            {/* zxcvbnが検出した具体的な弱点 */}
+            {result.feedback.warning && (
+              <p className="warning-text">
+                ⚠ {result.feedback.warning}
+              </p>
+            )}
+
+            {result.feedback.suggestions.length > 0 && (
+              <ul className="suggestion-list">
+                {result.feedback.suggestions.map((suggestion) => (
+                  <li key={suggestion}>{suggestion}</li>
+                ))}
+              </ul>
+            )}
           </div>
+        )}
+
+        {phase === "complete" && result && (
+          <PatternBreakdown
+            sequence={result.sequence}
+            showPassword={showPassword}
+          />
+        )}
+
+        {/* パスワードが変わったら照合結果をリセット */}
+        {phase === "complete" && result && (
+          <BreachCheck key={target} password={target} />
+        )}
+
+        {phase === "complete" && result && (
+          <HashLab key={target} password={target} />
         )}
 
         <p className="privacy-note">

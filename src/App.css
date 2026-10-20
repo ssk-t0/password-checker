@@ -215,6 +215,361 @@ button {
   margin-top: 12px;
 }
 
+.suggestion-list {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  font-size: 13px;
+  line-height: 1.9;
+  color: #334155;
+}
+
+/* 弱点の内訳 */
+
+.pattern-box,
+.breach-box {
+  margin-top: 16px;
+  padding: 18px;
+  background: #f5f8fc;
+  border: 1px solid #e5eaf2;
+  border-radius: 14px;
+}
+
+/* 押すと開くセクション */
+
+.pattern-box summary,
+.breach-box summary,
+.generator-box summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 15px;
+  font-weight: 700;
+  color: #14243d;
+}
+
+.pattern-box summary::-webkit-details-marker,
+.breach-box summary::-webkit-details-marker,
+.generator-box summary::-webkit-details-marker {
+  display: none;
+}
+
+.pattern-box summary::before,
+.breach-box summary::before,
+.generator-box summary::before {
+  content: "▸";
+  display: inline-block;
+  color: #3b82f6;
+  transition: transform 0.15s;
+}
+
+.pattern-box[open] summary::before,
+.breach-box[open] summary::before,
+.generator-box[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.pattern-box summary small,
+.breach-box summary small {
+  font-size: 12px;
+  font-weight: 400;
+  color: #64748b;
+}
+
+.pattern-box[open] summary,
+.breach-box[open] summary {
+  margin-bottom: 12px;
+}
+
+.pattern-box:not([open]),
+.breach-box:not([open]) {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.pattern-token-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 14px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 18px;
+}
+
+.pattern-token {
+  padding: 2px 6px;
+  background: #ffffff;
+  border-bottom: 3px solid;
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+
+.pattern-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pattern-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: #334155;
+  border-top: 1px solid #e5eaf2;
+}
+
+.pattern-list code {
+  font-weight: 700;
+  color: #14243d;
+  overflow-wrap: anywhere;
+}
+
+.pattern-list small {
+  margin-left: auto;
+  color: #64748b;
+}
+
+.pattern-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pattern-note,
+.breach-box p {
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #64748b;
+}
+
+.breach-box > summary + p {
+  margin-top: 0;
+}
+
+/* 漏洩チェック */
+
+.breach-button {
+  margin-top: 14px;
+  padding: 10px 16px;
+  border: 1px solid #3b82f6;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.breach-button:hover:not(:disabled) {
+  background: #eff6ff;
+}
+
+.breach-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.breach-box .breach-result {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.breach-box .breach-result.danger,
+.breach-box .breach-error {
+  color: #dc2626;
+}
+
+.breach-box .breach-result.safe {
+  color: #059669;
+}
+
+.hash-view {
+  margin-top: 12px;
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.hash-view span {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.hash-view code {
+  display: block;
+  font-size: 13px;
+  color: #94a3b8;
+  overflow-wrap: anywhere;
+}
+
+.hash-view mark {
+  background: #fde68a;
+  color: #14243d;
+  border-radius: 3px;
+}
+
+.hash-view small {
+  display: block;
+  margin-top: 6px;
+}
+
+/* ハッシュとソルトの実験 */
+
+.hash-lab .hash-view .breach-button {
+  margin: 4px 0 8px;
+}
+
+.hash-salt-button {
+  margin-top: 8px;
+  padding: 4px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #334155;
+  font-size: 12px;
+}
+
+.benchmark-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.benchmark-grid > div {
+  padding: 10px;
+  background: #f5f8fc;
+  border-radius: 8px;
+  min-width: 0;
+}
+
+.benchmark-grid small {
+  margin: 0 0 4px;
+}
+
+.benchmark-grid strong {
+  display: block;
+  font-size: 15px;
+  color: #14243d;
+  overflow-wrap: anywhere;
+}
+
+.benchmark-grid p {
+  grid-column: 1 / -1;
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #334155;
+}
+
+/* パスワード生成 */
+
+.generator-box {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: #f5f8fc;
+  border: 1px solid #e5eaf2;
+  border-radius: 12px;
+  font-size: 13px;
+  color: #334155;
+}
+
+.generator-box summary {
+  font-size: 13px;
+  color: #1d4ed8;
+}
+
+.generator-tabs {
+  display: flex;
+  gap: 6px;
+  margin: 14px 0 12px;
+}
+
+.generator-tabs button {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 12px;
+}
+
+.generator-tabs button.active {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.generator-range {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.generator-range input {
+  flex: 1;
+  min-width: 0;
+}
+
+.generator-sets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.generator-sets label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.generator-entropy {
+  margin: 12px 0 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.generator-output {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.generator-output code {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  color: #14243d;
+  overflow-wrap: anywhere;
+}
+
+.generator-output button {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #3b82f6;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .privacy-note {
   margin: 24px 0 0;
   font-size: 11px;
